@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoeApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,29 @@ namespace ShoeApp.Pages
         {
             try
             {
+                string login = loginField.Text.Trim();
 
+                if (login.Length == 0) return;
+
+                Users u = AppConnect.ShoeDB.Users.FirstOrDefault(x => x.login == login);
+
+                if (u == null)
+                {
+                    MessageBox.Show($"Пользователь не найден");
+                    return;
+                }
+
+                AppConnect.CurrentUser = u;
+
+                if(u.roleId == 1 || u.roleId == 2)
+                {
+
+                }
+                else
+                {
+                    AppFrame.mainFrame.Navigate(new ProductPage());
+                    MessageBox.Show($"Вход успешен!!!");
+                }
             }
             catch (Exception ex)
             {
@@ -40,7 +63,8 @@ namespace ShoeApp.Pages
         {
             try
             {
-
+                AppConnect.CurrentUser = null;
+                AppFrame.mainFrame.Navigate(new ProductPage());
             }
             catch (Exception ex)
             {
