@@ -10,7 +10,6 @@ namespace ShoeApp
     internal class AppConnect
     {
         public static ShoeDBEntities ShoeDB;
-
         public static Users CurrentUser;
     }
 }
