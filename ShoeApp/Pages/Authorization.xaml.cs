@@ -24,5 +24,28 @@ namespace ShoeApp.Pages
         {
             InitializeComponent();
         }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Критическая ошибка: {ex}");
+            }
+        }
+        private void Guest_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Критическая ошибка: {ex}");
+            }
+        }
     }
 }

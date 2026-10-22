@@ -9,6 +9,28 @@
       Title="Авторизация">
 
     <Grid>
-        
+        <StackPanel VerticalAlignment="Center" 
+                    HorizontalAlignment="Center"
+                    Width="320">
+            <Image Source="/Images/Чудо Обувь.png"
+                   Height="100"
+                   Margin="0, 0, 0, 0"/>
+            <TextBlock Text="Вход в систему"
+                       HorizontalAlignment="Center"
+                       FontSize="25"
+                       FontWeight="Bold"
+                       Margin="0, 0, 0, 10"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Логин:" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                <TextBox x:Name="loginField" Width="265"/>
+            </StackPanel>
+
+            <Button Content="Войти"
+                    Click="Login_Click"/>
+            <Button Content="Войти как гость"
+                    Click="Guest_Click"
+                    Background="#AAAAAA"/>
+        </StackPanel>
     </Grid>
 </Page>
