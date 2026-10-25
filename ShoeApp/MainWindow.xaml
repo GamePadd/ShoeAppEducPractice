@@ -29,8 +29,7 @@
                        VerticalAlignment="Center"/>
         </StackPanel>
 
-        <TextBlock Text="Пользователь: "
-                   FontSize="25"
+        <TextBlock FontSize="25"
                    FontWeight="Bold"
                    Grid.Row="0"
                    Margin="0 0 15 0"

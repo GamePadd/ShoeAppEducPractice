@@ -38,8 +38,7 @@
 
         <ListView x:Name="listProduct"
                   Grid.Row="1"
-                  MouseDoubleClick="ListProductMouseDoubleClick"
-                  ItemsSource="{d:SampleData ItemCount=3}">
+                  MouseDoubleClick="ListProductMouseDoubleClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Margin="5"
