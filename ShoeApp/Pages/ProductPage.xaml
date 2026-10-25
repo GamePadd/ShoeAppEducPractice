@@ -9,6 +9,31 @@
       Title="ProductPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="filterPanel"
+                    Grid.Row="0"
+                    Orientation="Horizontal"
+                    Margin="5"
+                    Visibility="Collapsed">
+            <ComboBox x:Name="cmbSort"
+                      Width="180"
+                      Margin="5"
+                      SelectionChanged="FilterChanged"/>
+            <ComboBox x:Name="cmbFilter"
+                      Width="180"
+                      Margin="5"
+                      SelectionChanged="FilterChanged"/>
+
+            <TextBox x:Name="txtSearch"
+                     Width="250"
+                     Margin="5"
+                     TextChanged="FilterChanged"
+                     ToolTip="Поиск по наименованию и описанию"/>
+        </StackPanel>
     </Grid>
 </Page>
