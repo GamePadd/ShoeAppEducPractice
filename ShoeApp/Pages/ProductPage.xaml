@@ -35,5 +35,81 @@
                      TextChanged="FilterChanged"
                      ToolTip="Поиск по наименованию и описанию"/>
         </StackPanel>
+
+        <ListView x:Name="listProduct"
+                  Grid.Row="1"
+                  MouseDoubleClick="ListProductMouseDoubleClick"
+                  ItemsSource="{d:SampleData ItemCount=3}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            BorderBrush="#70B2AF"
+                            Background="{Binding RowColor}"
+                            Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="160"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0"
+                                   Source="{Binding ImagePath}"
+                                   Width="100"
+                                   Height="100"/>
+                            <StackPanel Grid.Column="1" 
+                                        Orientation="Vertical"
+                                        Margin="10 0 0 0">
+                                <TextBlock FontWeight="Bold">
+                                    <Run Text="{Binding Manufacturers.name}"/>
+                                    <Run Text="|"/>
+                                    <Run Text="{Binding name}"/>
+                                </TextBlock>
+
+                                <TextBlock>
+                                    <Run Text="Категория: "/>
+                                    <Run Text="{Binding Categories.name}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Количество: "/>
+                                    <Run Text="{Binding QuantityText, Mode=OneWay}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Состав: "/>
+                                    <Run Text="{Binding composition}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Column="2"
+                                        VerticalAlignment="Center">
+                                <TextBlock FontSize="16"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding FinalPrice, StringFormat={}{0:N2} Р}"/>
+                                <TextBlock Foreground="Red"
+                                           TextDecorations="Strikethrough"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding OldPrice}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Content="Удалить товар"
+                    Click="DeleteClick"
+                    Background="#FF8080"/>
+            <Button/>
+            <Button/>
+            <Button Content="Выход"
+                    Click="ExitButton"
+                    Background="#AAAAAA"/>
+        </StackPanel>
     </Grid>
 </Page>
