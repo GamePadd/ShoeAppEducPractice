@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище ShoeDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище FruktimDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="id" />
@@ -21,13 +21,6 @@
           <Property Name="stockItemId" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
           <Property Name="unitPrice" Type="decimal" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="Manufacturers">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -46,10 +39,9 @@
           <Property Name="subcategoryId" Type="int" Nullable="false" />
           <Property Name="imagePath" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="manufacterId" Type="int" Nullable="false" />
+          <Property Name="supplierId" Type="int" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="composition" Type="nvarchar" MaxLength="256" />
-          <Property Name="price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -57,13 +49,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Sizes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="size" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="StockItems">
           <Key>
@@ -73,8 +58,16 @@
           <Property Name="productId" Type="int" Nullable="false" />
           <Property Name="sizeId" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Subcategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -102,6 +95,13 @@
           <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="roleId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Weights">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="size" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_ItemsOrder_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="ItemsOrder" Type="Self.ItemsOrder" Multiplicity="*" />
@@ -151,14 +151,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Manufacturers">
-          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Manufacturers">
+            <Principal Role="Suppliers">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="manufacterId" />
+              <PropertyRef Name="supplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -187,10 +187,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StockItems_Sizes">
-          <End Role="Sizes" Type="Self.Sizes" Multiplicity="1" />
+          <End Role="Weights" Type="Self.Weights" Multiplicity="1" />
           <End Role="StockItems" Type="Self.StockItems" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Sizes">
+            <Principal Role="Weights">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="StockItems">
@@ -210,18 +210,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище ShoeDBModelContainer">
+        <EntityContainer Name="Хранилище FruktimDBModelContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemsOrder" EntityType="Self.ItemsOrder" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockItems" EntityType="Self.StockItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subcategories" EntityType="Self.Subcategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Weights" EntityType="Self.Weights" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ItemsOrder_Orders" Association="Self.FK_ItemsOrder_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="ItemsOrder" EntitySet="ItemsOrder" />
@@ -239,7 +239,7 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Manufacturers" Association="Self.FK_Products_Manufacturers">
-            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Subcategories" Association="Self.FK_Products_Subcategories">
@@ -251,7 +251,7 @@
             <End Role="StockItems" EntitySet="StockItems" />
           </AssociationSet>
           <AssociationSet Name="FK_StockItems_Sizes" Association="Self.FK_StockItems_Sizes">
-            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="Weights" EntitySet="Weights" />
             <End Role="StockItems" EntitySet="StockItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
@@ -263,7 +263,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ShoeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FruktimDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="id" />
@@ -284,14 +284,6 @@
           <NavigationProperty Name="Orders" Relationship="Self.FK_ItemsOrder_Orders" FromRole="ItemsOrder" ToRole="Orders" />
           <NavigationProperty Name="StockItems" Relationship="Self.FK_ItemsOrder_StockItems" FromRole="ItemsOrder" ToRole="StockItems" />
         </EntityType>
-        <EntityType Name="Manufacturers">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Manufacturers" FromRole="Manufacturers" ToRole="Products" />
-        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="id" />
@@ -311,12 +303,11 @@
           <Property Name="subcategoryId" Type="Int32" Nullable="false" />
           <Property Name="imagePath" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="manufacterId" Type="Int32" Nullable="false" />
+          <Property Name="supplierId" Type="Int32" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="composition" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="Categories" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Manufacturers" Relationship="Self.FK_Products_Manufacturers" FromRole="Products" ToRole="Manufacturers" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Products_Manufacturers" FromRole="Products" ToRole="Suppliers" />
           <NavigationProperty Name="Subcategories" Relationship="Self.FK_Products_Subcategories" FromRole="Products" ToRole="Subcategories" />
           <NavigationProperty Name="StockItems" Relationship="Self.FK_StockItems_Products" FromRole="Products" ToRole="StockItems" />
         </EntityType>
@@ -328,14 +319,6 @@
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Sizes">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="size" Type="Double" Nullable="false" />
-          <NavigationProperty Name="StockItems" Relationship="Self.FK_StockItems_Sizes" FromRole="Sizes" ToRole="StockItems" />
-        </EntityType>
         <EntityType Name="StockItems">
           <Key>
             <PropertyRef Name="id" />
@@ -344,9 +327,10 @@
           <Property Name="productId" Type="Int32" Nullable="false" />
           <Property Name="sizeId" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="ItemsOrder" Relationship="Self.FK_ItemsOrder_StockItems" FromRole="StockItems" ToRole="ItemsOrder" />
           <NavigationProperty Name="Products" Relationship="Self.FK_StockItems_Products" FromRole="StockItems" ToRole="Products" />
-          <NavigationProperty Name="Sizes" Relationship="Self.FK_StockItems_Sizes" FromRole="StockItems" ToRole="Sizes" />
+          <NavigationProperty Name="Weights" Relationship="Self.FK_StockItems_Sizes" FromRole="StockItems" ToRole="Weights" />
         </EntityType>
         <EntityType Name="Subcategories">
           <Key>
@@ -355,6 +339,14 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Products_Subcategories" FromRole="Subcategories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Manufacturers" FromRole="Suppliers" ToRole="Products" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -379,6 +371,14 @@
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
         </EntityType>
+        <EntityType Name="Weights">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StockItems" Relationship="Self.FK_StockItems_Sizes" FromRole="Weights" ToRole="StockItems" />
+        </EntityType>
         <Association Name="FK_Products_Categories">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -415,18 +415,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Manufacturers">
-          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Manufacturers">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="manufacterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -436,6 +424,18 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Manufacturers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="supplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -476,10 +476,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StockItems_Sizes">
-          <End Role="Sizes" Type="Self.Sizes" Multiplicity="1" />
+          <End Role="Weights" Type="Self.Weights" Multiplicity="1" />
           <End Role="StockItems" Type="Self.StockItems" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Sizes">
+            <Principal Role="Weights">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="StockItems">
@@ -487,18 +487,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ShoeDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FruktimDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="ItemsOrder" EntityType="Self.ItemsOrder" />
-          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
           <EntitySet Name="Products" EntityType="Self.Products" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
-          <EntitySet Name="Sizes" EntityType="Self.Sizes" />
           <EntitySet Name="StockItems" EntityType="Self.StockItems" />
           <EntitySet Name="Subcategories" EntityType="Self.Subcategories" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Weights" EntityType="Self.Weights" />
           <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
@@ -511,13 +511,13 @@
             <End Role="StockItems" EntitySet="StockItems" />
             <End Role="ItemsOrder" EntitySet="ItemsOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Manufacturers" Association="Self.FK_Products_Manufacturers">
-            <End Role="Manufacturers" EntitySet="Manufacturers" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
           <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Manufacturers" Association="Self.FK_Products_Manufacturers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Subcategories" Association="Self.FK_Products_Subcategories">
             <End Role="Subcategories" EntitySet="Subcategories" />
@@ -532,7 +532,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_StockItems_Sizes" Association="Self.FK_StockItems_Sizes">
-            <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="Weights" EntitySet="Weights" />
             <End Role="StockItems" EntitySet="StockItems" />
           </AssociationSet>
         </EntityContainer>
@@ -541,9 +541,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище ShoeDBModelContainer" CdmEntityContainer="ShoeDBEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FruktimDBModelContainer" CdmEntityContainer="FruktimDBEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="ShoeDBModel.Categories">
+            <EntityTypeMapping TypeName="FruktimDBModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -551,7 +551,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ItemsOrder">
-            <EntityTypeMapping TypeName="ShoeDBModel.ItemsOrder">
+            <EntityTypeMapping TypeName="FruktimDBModel.ItemsOrder">
               <MappingFragment StoreEntitySet="ItemsOrder">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="orderId" ColumnName="orderId" />
@@ -561,16 +561,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Manufacturers">
-            <EntityTypeMapping TypeName="ShoeDBModel.Manufacturers">
-              <MappingFragment StoreEntitySet="Manufacturers">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="ShoeDBModel.Orders">
+            <EntityTypeMapping TypeName="FruktimDBModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -579,56 +571,56 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="ShoeDBModel.Products">
+            <EntityTypeMapping TypeName="FruktimDBModel.Products">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="subcategoryId" ColumnName="subcategoryId" />
                 <ScalarProperty Name="imagePath" ColumnName="imagePath" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="manufacterId" ColumnName="manufacterId" />
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="composition" ColumnName="composition" />
-                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="ShoeDBModel.Roles">
+            <EntityTypeMapping TypeName="FruktimDBModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sizes">
-            <EntityTypeMapping TypeName="ShoeDBModel.Sizes">
-              <MappingFragment StoreEntitySet="Sizes">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="size" ColumnName="size" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StockItems">
-            <EntityTypeMapping TypeName="ShoeDBModel.StockItems">
+            <EntityTypeMapping TypeName="FruktimDBModel.StockItems">
               <MappingFragment StoreEntitySet="StockItems">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="sizeId" ColumnName="sizeId" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Subcategories">
-            <EntityTypeMapping TypeName="ShoeDBModel.Subcategories">
+            <EntityTypeMapping TypeName="FruktimDBModel.Subcategories">
               <MappingFragment StoreEntitySet="Subcategories">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="FruktimDBModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ShoeDBModel.sysdiagrams">
+            <EntityTypeMapping TypeName="FruktimDBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -639,7 +631,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ShoeDBModel.Users">
+            <EntityTypeMapping TypeName="FruktimDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
@@ -647,6 +639,14 @@
                 <ScalarProperty Name="patronymic" ColumnName="patronymic" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weights">
+            <EntityTypeMapping TypeName="FruktimDBModel.Weights">
+              <MappingFragment StoreEntitySet="Weights">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="size" ColumnName="size" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

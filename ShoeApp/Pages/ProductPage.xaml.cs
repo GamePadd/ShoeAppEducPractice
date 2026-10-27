@@ -35,7 +35,7 @@ namespace ShoeApp.Pages
             }
 
             mainWindow.fullName.Text = currentUser?.FullName ?? "Гость";
-            listProduct.ItemsSource = AppConnect.ShoeDB.Products.ToList();
+            listProduct.ItemsSource = AppConnect.FruktimDB.Products.ToList();
             Load();
         }
 
@@ -49,7 +49,7 @@ namespace ShoeApp.Pages
 
             cmbFilter.Items.Clear();
             cmbFilter.Items.Add("Все категории");
-            var categories = AppConnect.ShoeDB.Categories.ToList();
+            var categories = AppConnect.FruktimDB.Categories.ToList();
 
             foreach(var category in categories)
             {
@@ -63,29 +63,29 @@ namespace ShoeApp.Pages
             listProduct.ItemsSource = ProductFind();
         }
 
-        private Products[] ProductFind()
+        private StockItems[] ProductFind()
         {
-            var products = AppConnect.ShoeDB.Products.ToList();
+            var items = AppConnect.FruktimDB.StockItems.ToList();
 
             if (txtSearch.Text.Length > 0)
             {
                 string text = txtSearch.Text.ToLower();
-                products = products.Where(p => p.name.ToLower().Contains(text) || p.description.ToLower().Contains(text)).ToList();
+                items = items.Where(p => p.Products.name.ToLower().Contains(text) || p.Products.description.ToLower().Contains(text)).ToList();
             }
             if (cmbFilter.SelectedIndex > 0)
             {
-                products = products.Where(p => p.categoryId == cmbFilter.SelectedIndex).ToList();
+                items = items.Where(p => p.Products.categoryId == cmbFilter.SelectedIndex).ToList();
             }
             if(cmbSort.SelectedIndex == 1)
             {
-                products = products.OrderBy(p => p.FinalPrice).ToList();
+                items = items.OrderBy(p => p.FinalPrice).ToList();
             }
             if (cmbSort.SelectedIndex == 2)
             {
-                products = products.OrderByDescending(p => p.FinalPrice).ToList();
+                items = items.OrderByDescending(p => p.FinalPrice).ToList();
             }
 
-            return products.ToArray();
+            return items.ToArray();
         }
 
         private void ListProductMouseDoubleClick(object sender, MouseButtonEventArgs e)

@@ -97,9 +97,6 @@
     <Compile Include="Models\ItemsOrder.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Manufacturers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -124,19 +121,22 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Sizes.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\StockItems.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Subcategories.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Suppliers.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Weights.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\Authorization.xaml.cs">
@@ -179,55 +179,57 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\IMG_KB_164811.png" />
-    <Resource Include="Images\IMG_KB_164816.png" />
-    <Resource Include="Images\IMG_KB_185501.png" />
-    <Resource Include="Images\IMG_KSd_185508.png" />
-    <Resource Include="Images\IMG_KSd_195207.png" />
-    <Resource Include="Images\IMG_KSho_185512.png" />
-    <Resource Include="Images\IMG_KS_195213.png" />
-    <Resource Include="Images\IMG_KS_195217.png" />
-    <Resource Include="Images\IMG_KS_195222.png" />
-    <Resource Include="Images\IMG_MB_174349.png" />
-    <Resource Include="Images\IMG_MB_191200.png" />
-    <Resource Include="Images\IMG_MB_191205.png" />
-    <Resource Include="Images\IMG_MSho_190514.png" />
-    <Resource Include="Images\IMG_MSho_190518.png" />
-    <Resource Include="Images\IMG_MSho_191612.png" />
-    <Resource Include="Images\IMG_MS_185531.png" />
-    <Resource Include="Images\IMG_MS_185532.png" />
-    <Resource Include="Images\IMG_MS_185533.png" />
-    <Resource Include="Images\IMG_WB_170859.png" />
-    <Resource Include="Images\IMG_WB_170905.png" />
-    <Resource Include="Images\IMG_WB_170906.png" />
-    <Resource Include="Images\IMG_WSd_174332.png" />
-    <Resource Include="Images\IMG_WSd_185156.png" />
-    <Resource Include="Images\IMG_WSd_185551.png" />
-    <Resource Include="Images\IMG_WSho_174409.png" />
-    <Resource Include="Images\IMG_WSho_185202.png" />
-    <Resource Include="Images\IMG_WSho_185545.png" />
-    <Resource Include="Images\IMG_WS_174110.png" />
-    <Resource Include="Images\IMG_WS_185528.png" />
-    <Resource Include="Images\IMG_WS_185535.png" />
-    <Resource Include="Images\IMG_WS_185538.png" />
+    <Resource Include="Images\picture.png" />
+    <Resource Include="Images\FruktimLogo.ico" />
+    <Resource Include="Images\FruktimLogo.png" />
+    <Resource Include="Images\1.png" />
+    <Resource Include="Images\10.jpg" />
+    <Resource Include="Images\11.jpg" />
+    <Resource Include="Images\12.jpg" />
+    <Resource Include="Images\13.jpg" />
+    <Resource Include="Images\14.jpg" />
+    <Resource Include="Images\15.jpeg" />
+    <Resource Include="Images\16.jpg" />
+    <Resource Include="Images\17.jpg" />
+    <Resource Include="Images\18.png" />
+    <Resource Include="Images\19.png" />
+    <Resource Include="Images\2.png" />
+    <Resource Include="Images\20.png" />
+    <Resource Include="Images\21.jpg" />
+    <Resource Include="Images\22.jpeg" />
+    <Resource Include="Images\23.png" />
+    <Resource Include="Images\24.png" />
+    <Resource Include="Images\25.jpg" />
+    <Resource Include="Images\26.png" />
+    <Resource Include="Images\27.jpg" />
+    <Resource Include="Images\28.jpg" />
+    <Resource Include="Images\29.png" />
+    <Resource Include="Images\3.png" />
+    <Resource Include="Images\30.jpg" />
+    <Resource Include="Images\31.jpg" />
+    <Resource Include="Images\4.png" />
+    <Resource Include="Images\5.png" />
+    <Resource Include="Images\6.png" />
+    <Resource Include="Images\7.png" />
+    <Resource Include="Images\8.png" />
+    <Resource Include="Images\9.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\picture.png" />
-    <Resource Include="Images\Чудо Обувь.ico" />
-    <Resource Include="Images\Чудо Обувь.png" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo-ver3.png" />
+    <Content Include="Images\logo-ver3.svg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

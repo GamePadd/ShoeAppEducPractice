@@ -26,16 +26,16 @@ namespace ShoeApp.Models
         public int subcategoryId { get; set; }
         public string imagePath { get; set; }
         public string name { get; set; }
-        public int manufacterId { get; set; }
+        public int supplierId { get; set; }
         public string description { get; set; }
         public string composition { get; set; }
-        public decimal price { get; set; }
     
         public virtual Categories Categories { get; set; }
-        public virtual Manufacturers Manufacturers { get; set; }
+        public virtual Suppliers Suppliers { get; set; }
         public virtual Subcategories Subcategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockItems> StockItems { get; set; }
+
         public int TotalQuantity
         {
             get
@@ -51,38 +51,6 @@ namespace ShoeApp.Models
                 return TotalQuantity > 5 ? "Много" : "Мало";
             }
         }
-
-        public decimal FinalPrice
-        {
-            get
-            {
-                var today = DateTime.Today;
-                var firstDayThisMonth = new DateTime(today.Year, today.Month, 1);
-                var firstDayPrevMonth = firstDayThisMonth.AddDays(-1);
-
-                bool hadOrders = StockItems
-                    .SelectMany(si => si.ItemsOrder)
-                    .Any(oi => oi.Orders.date >= firstDayPrevMonth && oi.Orders.date < firstDayThisMonth);
-
-                return hadOrders ? price : price * 0.75m;
-            }
-        }
-
-        public string OldPrice
-        {
-            get
-            {
-                if (FinalPrice == price)
-                {
-                    return null;
-                }
-                else
-                {
-                    return price.ToString() + "Р";
-                }
-            }
-        }
-
         public string ImagePath
         {
             get
@@ -102,7 +70,7 @@ namespace ShoeApp.Models
         {
             get
             {
-                if(TotalQuantity < 3)
+                if (TotalQuantity < 3)
                 {
                     return @"#FF8080";
                 }

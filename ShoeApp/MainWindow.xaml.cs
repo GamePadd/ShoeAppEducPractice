@@ -26,7 +26,7 @@ namespace ShoeApp
         public MainWindow()
         {
             InitializeComponent();
-            AppConnect.ShoeDB = new ShoeDBEntities();
+            AppConnect.FruktimDB = new FruktimDBEntities();
             AppFrame.mainFrame = MainFrame;
             MainFrame.Navigate(new Pages.Authorization());
         }

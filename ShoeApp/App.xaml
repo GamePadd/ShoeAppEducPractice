@@ -6,7 +6,7 @@
     <Application.Resources>
 
         <SolidColorBrush x:Key="MainBackground" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="AccentBackground" Color="#D2F6E7"/>
+        <SolidColorBrush x:Key="AccentBackground" Color="#ed0748"/>
         <SolidColorBrush x:Key="AccentColor" Color="#70B2AF"/>
         <SolidColorBrush x:Key="WarningColor" Color="#FF8080"/>
         

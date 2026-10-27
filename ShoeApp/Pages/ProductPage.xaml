@@ -55,29 +55,33 @@
                             </Grid.ColumnDefinitions>
 
                             <Image Grid.Column="0"
-                                   Source="{Binding ImagePath}"
+                                   Source="{Binding Products.ImagePath}"
                                    Width="100"
                                    Height="100"/>
                             <StackPanel Grid.Column="1" 
                                         Orientation="Vertical"
                                         Margin="10 0 0 0">
                                 <TextBlock FontWeight="Bold">
-                                    <Run Text="{Binding Manufacturers.name}"/>
+                                    <Run Text="{Binding Products.Suppliers.name}"/>
                                     <Run Text="|"/>
-                                    <Run Text="{Binding name}"/>
+                                    <Run Text="{Binding Products.name}"/>
                                 </TextBlock>
 
                                 <TextBlock>
                                     <Run Text="Категория: "/>
-                                    <Run Text="{Binding Categories.name}"/>
+                                    <Run Text="{Binding Products.Categories.name}"/>
                                 </TextBlock>
                                 <TextBlock>
                                     <Run Text="Количество: "/>
-                                    <Run Text="{Binding QuantityText, Mode=OneWay}"/>
+                                    <Run Text="{Binding Products.QuantityText, Mode=OneWay}"/>
                                 </TextBlock>
                                 <TextBlock>
                                     <Run Text="Состав: "/>
-                                    <Run Text="{Binding composition}"/>
+                                    <Run Text="{Binding Products.composition}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Вес: "/>
+                                    <Run Text="{Binding Weights.size, Mode=OneWay}"/>      
                                 </TextBlock>
                             </StackPanel>
                             

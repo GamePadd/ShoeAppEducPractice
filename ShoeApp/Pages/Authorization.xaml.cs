@@ -34,7 +34,7 @@ namespace ShoeApp.Pages
 
                 if (login.Length == 0) return;
 
-                Users u = AppConnect.ShoeDB.Users.FirstOrDefault(x => x.login == login);
+                Users u = AppConnect.FruktimDB.Users.FirstOrDefault(x => x.login == login);
 
                 if (u == null)
                 {

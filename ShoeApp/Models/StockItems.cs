@@ -11,6 +11,7 @@ namespace ShoeApp.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     
     public partial class StockItems
     {
@@ -24,10 +25,41 @@ namespace ShoeApp.Models
         public int productId { get; set; }
         public int sizeId { get; set; }
         public int quantity { get; set; }
+        public Nullable<decimal> price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemsOrder> ItemsOrder { get; set; }
         public virtual Products Products { get; set; }
-        public virtual Sizes Sizes { get; set; }
+        public virtual Weights Weights { get; set; }
+
+        public decimal FinalPrice
+        {
+            get
+            {
+                var today = DateTime.Today;
+                var firstDayThisMonth = new DateTime(today.Year, today.Month, 1);
+                var firstDayPrevMonth = firstDayThisMonth.AddDays(-1);
+
+                bool hadOrders = this.Products.StockItems
+                    .SelectMany(si => si.ItemsOrder)
+                    .Any(oi => oi.Orders.date >= firstDayPrevMonth && oi.Orders.date < firstDayThisMonth);
+                return (decimal)(hadOrders ? price : price * 0.75m);
+            }
+        }
+
+        public string OldPrice
+        {
+            get
+            {
+                if (FinalPrice == price)
+                {
+                    return null;
+                }
+                else
+                {
+                    return price.ToString() + "Р";
+                }
+            }
+        }
     }
 }

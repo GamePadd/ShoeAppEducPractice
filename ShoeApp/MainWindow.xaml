@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoeApp"
         mc:Ignorable="d"
-        Title="Чудо Обувь" Height="620" Width="1200"
-        Icon="/Images/Чудо Обувь.ico"
+        Title="Фруктим" Height="620" Width="1200"
+        Icon="/Images/FruktimLogo.ico"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
@@ -17,21 +17,17 @@
         <StackPanel Orientation="Horizontal" 
                     Grid.Row="0" 
                     Background="{StaticResource AccentBackground}">
-            <Image Source="Images/Чудо Обувь.png"
-                   Height="70"
+            <Image Source="Images/logo-ver3.png"
+                   Height="50"
                    HorizontalAlignment="Left"
                    Margin="15"/>
 
-            <TextBlock Text="Чудо Обувь"
-                       FontSize="25"
-                       FontWeight="Bold"
-                       Margin="15 0 0 0"
-                       VerticalAlignment="Center"/>
         </StackPanel>
 
         <TextBlock FontSize="25"
                    FontWeight="Bold"
                    Grid.Row="0"
+                   Foreground="White"
                    Margin="0 0 15 0"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Right"
