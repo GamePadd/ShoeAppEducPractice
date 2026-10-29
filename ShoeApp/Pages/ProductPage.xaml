@@ -45,7 +45,7 @@
                             BorderThickness="1"
                             CornerRadius="4"
                             BorderBrush="#70B2AF"
-                            Background="{Binding RowColor}"
+                            Background="{Binding Products.RowColor}"
                             Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
