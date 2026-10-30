@@ -38,7 +38,7 @@ namespace ShoeApp.Models
             {
                 var today = DateTime.Today;
                 var firstDayThisMonth = new DateTime(today.Year, today.Month, 1);
-                var firstDayPrevMonth = firstDayThisMonth.AddDays(-1);
+                var firstDayPrevMonth = firstDayThisMonth.AddMonths(-1);
 
                 bool hadOrders = this.Products.StockItems
                     .SelectMany(si => si.ItemsOrder)
