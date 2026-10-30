@@ -46,7 +46,8 @@ namespace ShoeApp.Pages
 
                 if(u.roleId == 1 || u.roleId == 2)
                 {
-
+                    AppFrame.mainFrame.Navigate(new ProductPage());
+                    MessageBox.Show($"Вы вошли как администратор!");
                 }
                 else
                 {

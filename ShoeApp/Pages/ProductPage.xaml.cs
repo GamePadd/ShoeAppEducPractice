@@ -35,7 +35,7 @@ namespace ShoeApp.Pages
             }
 
             mainWindow.fullName.Text = currentUser?.FullName ?? "Гость";
-            listProduct.ItemsSource = AppConnect.FruktimDB.Products.ToList();
+            listProduct.ItemsSource = AppConnect.FruktimDB.StockItems.ToList();
             Load();
         }
 
@@ -95,7 +95,40 @@ namespace ShoeApp.Pages
 
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
+            var curUser = AppConnect.CurrentUser;
+            if ((curUser.roleId != 1 && curUser.roleId != 2) || curUser == null) return;
 
+            var selectedItem = listProduct.SelectedItem;
+            if (selectedItem == null)
+            {
+                MessageBox.Show("Не выбран товар для удаления!");
+                return;
+            }
+
+            if (MessageBox.Show("Удалить выбранный товар?", "Подтверждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+
+            try
+            {
+                var stockItem = selectedItem as StockItems;
+
+                if (stockItem == null)
+                {
+                    MessageBox.Show("Не удалось определить продукт!");
+                    return;
+                }
+
+                AppConnect.FruktimDB.StockItems.Remove(stockItem);
+                AppConnect.FruktimDB.SaveChanges();
+
+                listProduct.ItemsSource = AppConnect.FruktimDB.StockItems.ToList();
+
+                MessageBox.Show("Товар удалён!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Критическая ошибка: {ex}");
+            }
         }
 
         private void ExitButton(object sender, RoutedEventArgs e)
